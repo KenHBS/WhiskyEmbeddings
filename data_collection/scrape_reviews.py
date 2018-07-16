@@ -66,7 +66,6 @@ def import_credentials(loc):
     creds = dict([re.split('=', x) for x in cred])
     return creds
 
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-doc1', dest='credentials', required=True,
