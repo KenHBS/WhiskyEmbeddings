@@ -133,6 +133,8 @@ class WhiskyEmbeddings:
             target = df.ix[whisky]
         except KeyError:
             whisky = self.correct_typo(whisky)
+            if whisky is None:
+                return None
             target = df.ix[whisky]
         target = target.values.reshape(1, -1)
 
@@ -162,11 +164,16 @@ class WhiskyEmbeddings:
             matches = difflib.get_close_matches(whisky, w_names)
 
         cnt = [self.count[x] for x in matches]
-        m = max(cnt)
+        try:
+            m = max(cnt)
+        except ValueError:
+            print('could not find a suitable match, try some other name')
+            return None
         ind = [i for i, j in enumerate(cnt) if j == m][0]
 
-        print('these are the results for %s' % whisky)
-        return matches[ind]
+        new_name = matches[ind]
+        print('these are the results for %s' % new_name)
+        return new_name
 
     def describe_whisky(self, whisky, n=10):
         df = self.embeddings
