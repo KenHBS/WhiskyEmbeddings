@@ -48,22 +48,20 @@ def run_it_all(dat, tok, rm_s, size, window, skipgram, workers, min_count):
     return w_embedding
 
 
+# Fit three different model and check out differences
 we1 = run_it_all(data, tok=True, rm_s=True, size=50, window=3,
                  skipgram=True, workers=5, min_count=30)
 we2 = run_it_all(data, tok=True, rm_s=True, size=100, window=3,
                  skipgram=True, workers=5, min_count=30)
-we3 = run_it_all(data, tok=True, rm_s=True, size=100, window=3,
-                 skipgram=True, workers=5, min_count=50)
+we3 = run_it_all(data, tok=False, rm_s=True, size=100, window=3,
+                 skipgram=False, workers=5, min_count=50)
 
 
-we1.most_similar_whiskies('coal ila 12')
+we1.most_similar_whiskies('makers mark')
+we3.most_similar_whiskies('makers mark')
+we3.most_similar_whiskies('makers mark')
+
 
 we1.describe_whisky('lagavulin 16', n=20)
 we2.describe_whisky('lagavulin 16', n=20)
-
-we1.describe_whisky('ardbeg 10', n=20)
-we2.describe_whisky('argbed 10', n=20)
-
-
-## Tokenization improves results!
-##
+we3.describe_whisky('lagavulin 16', n=20)
